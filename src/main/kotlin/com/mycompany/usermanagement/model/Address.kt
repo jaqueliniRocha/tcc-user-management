@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 class Address(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long,
     @field:NotBlank val street: String,
     @field:NotNull @field:Min(0) val number: Int,
     val description: String,

@@ -23,12 +23,14 @@ class UserService(
     }
 
     fun update(id: Long, user: User) {
-        user.id = id
-        if (userRepository.existsById(id)) {
-            userRepository.save(user)
-            eventSender.update(user)
+        val userFound = userRepository.findById(id)
+        if (!userFound.isPresent()) {
+            throw NotFoundException()
         }
-        throw NotFoundException()
+        user.id = id
+        user.address.id = userFound.get().address.id
+        userRepository.save(user)
+        eventSender.update(user)
     }
 
     fun delete(id: Long) {

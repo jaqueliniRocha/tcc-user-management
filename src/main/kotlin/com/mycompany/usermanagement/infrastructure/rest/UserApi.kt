@@ -1,16 +1,13 @@
 package com.mycompany.usermanagement.infrastructure.rest
 import com.mycompany.usermanagement.application.UserService
-import com.mycompany.usermanagement.model.NotFoundException
 import com.mycompany.usermanagement.model.User
-import com.mycompany.usermanagement.model.repository.UserRepository
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpEntity
-import org.springframework.http.ResponseEntity.*
+import org.springframework.http.ResponseEntity.created
+import org.springframework.http.ResponseEntity.noContent
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
-import java.util.function.Consumer
 import javax.validation.Valid
-import javax.websocket.server.PathParam
 
 
 @RestController
