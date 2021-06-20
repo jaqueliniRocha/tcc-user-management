@@ -1,6 +1,7 @@
 package com.mycompany.usermanagement.infrastructure.config
 
 import com.mycompany.usermanagement.model.NotFoundException
+import com.mycompany.usermanagement.model.UserAlreadyExistsException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -31,11 +32,18 @@ class ExceptionHandlerConfig : ResponseEntityExceptionHandler(
     }
 
     @ExceptionHandler(NotFoundException::class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handleNotFound(
         ex: NotFoundException,
     ): ResponseEntity<Any> {
         return ResponseEntity(HttpStatus.NOT_FOUND)
 
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException::class)
+    fun handleUserAlreadyExists(
+        ex: UserAlreadyExistsException,
+    ): ResponseEntity<Any> {
+        val errors: Map<String, String> = hashMapOf(Pair("user", "CPF or email already exists"))
+        return ResponseEntity(errors, HttpStatus.BAD_REQUEST)
     }
 }

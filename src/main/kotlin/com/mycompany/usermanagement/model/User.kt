@@ -5,6 +5,7 @@ import org.hibernate.annotations.CascadeType
 import org.hibernate.validator.constraints.br.CPF
 import javax.persistence.*
 import javax.validation.Valid
+import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -13,9 +14,9 @@ data class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long,
     @field:NotBlank val firstName: String,
     @field:NotBlank val lastName: String,
-    @field:NotBlank val login: String,
-    @field:NotBlank val password: String,
-    @field:CPF val cpf: String,
+    @field:Email @field:NotBlank @field:Column(unique=true) val email: String,
+    @field:NotBlank var password: String,
+    @field:CPF @field:Column(unique=true) val cpf: String,
 
     @field:NotNull
     @field:Valid
@@ -33,7 +34,7 @@ data class User(
 ) {
 
     override fun toString(): String {
-        return "User(id=$id, firstName='$firstName', lastName='$lastName', login='$login', cpf='$cpf', " +
+        return "User(id=$id, firstName='$firstName', lastName='$lastName', email='$email', cpf='$cpf', " +
                 "address=$address, category=$category)"
     }
 }
