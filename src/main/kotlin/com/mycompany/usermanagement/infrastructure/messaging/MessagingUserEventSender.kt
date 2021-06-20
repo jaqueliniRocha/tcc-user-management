@@ -1,24 +1,30 @@
 package com.mycompany.usermanagement.infrastructure.messaging
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.mycompany.usermanagement.model.User
 import com.mycompany.usermanagement.model.UserEventSender
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Component
 
+
 @Component
 class MessagingUserEventSender(
-    private val rabbitTemplate: RabbitTemplate
+    private val rabbitTemplate: RabbitTemplate,
+    private val objectMapper: ObjectMapper
 ) : UserEventSender {
 
     override fun create(user: User) {
-        rabbitTemplate.convertAndSend("events", "user-management.created", user)
+        val userString = objectMapper.writeValueAsString(user)
+        rabbitTemplate.convertAndSend("events", "user-management.created", userString.toByteArray())
     }
 
     override fun delete(user: User) {
-        rabbitTemplate.convertAndSend("events", "user-management.deleted", user)
+        val userString = objectMapper.writeValueAsString(user)
+        rabbitTemplate.convertAndSend("events", "user-management.deleted", userString.toByteArray())
     }
 
     override fun update(user: User) {
-        rabbitTemplate.convertAndSend("events", "user-management.updated", user)
+        val userString = objectMapper.writeValueAsString(user)
+        rabbitTemplate.convertAndSend("events", "user-management.updated", userString.toByteArray())
     }
 }

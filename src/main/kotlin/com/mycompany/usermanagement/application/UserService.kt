@@ -1,16 +1,16 @@
 package com.mycompany.usermanagement.application
 
-import com.mycompany.usermanagement.infrastructure.messaging.MessagingUserEventSender
 import com.mycompany.usermanagement.model.NotFoundException
 import com.mycompany.usermanagement.model.User
 import com.mycompany.usermanagement.model.UserAlreadyExistsException
+import com.mycompany.usermanagement.model.UserEventSender
 import com.mycompany.usermanagement.model.repository.UserRepository
 import org.springframework.stereotype.Service
 
 @Service
 class UserService(
     val userRepository: UserRepository,
-    val eventSender: MessagingUserEventSender
+    val eventSender: UserEventSender
 ) {
 
     fun create(user: User): User {
@@ -24,7 +24,7 @@ class UserService(
 
     fun update(id: Long, user: User) {
         val userFound = userRepository.findById(id)
-        if (!userFound.isPresent()) {
+        if (!userFound.isPresent) {
             throw NotFoundException()
         }
         user.id = id
@@ -35,11 +35,11 @@ class UserService(
 
     fun delete(id: Long) {
         val user = userRepository.findById(id)
-        if (user.isPresent) {
-            userRepository.deleteById(id)
-            eventSender.create(user.get())
+        if (!user.isPresent) {
+            throw NotFoundException()
         }
-        throw NotFoundException()
+        userRepository.deleteById(id)
+        eventSender.delete(user.get())
     }
 
 }
