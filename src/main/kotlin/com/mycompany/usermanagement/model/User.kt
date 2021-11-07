@@ -31,6 +31,13 @@ data class User(
     @Enumerated(EnumType.STRING)
     @field:NotNull
     val profile: UserProfile,
+
+    @field:NotNull
+    @field:Valid
+    @Cascade(CascadeType.ALL)
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    val pets: Collection<Pet>,
 ) {
 
     override fun toString(): String {
