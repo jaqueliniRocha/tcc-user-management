@@ -8,6 +8,7 @@ import javax.validation.Valid
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Null
 
 @Entity
 data class User(
@@ -36,7 +37,7 @@ data class User(
     @Cascade(CascadeType.ALL)
     @OneToMany
     @JoinColumn(name = "user_id")
-    val pets: Collection<Pet>,
+    val pets: Collection<Pet>?,
 ) {
 
     override fun toString(): String {
