@@ -32,7 +32,6 @@ data class User(
     @field:NotNull
     val profile: UserProfile,
 
-    @field:NotNull
     @field:Valid
     @Cascade(CascadeType.ALL)
     @OneToMany

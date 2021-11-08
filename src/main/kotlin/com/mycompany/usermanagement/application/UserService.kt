@@ -1,11 +1,9 @@
 package com.mycompany.usermanagement.application
 
-import com.mycompany.usermanagement.model.NotFoundException
-import com.mycompany.usermanagement.model.User
-import com.mycompany.usermanagement.model.UserAlreadyExistsException
-import com.mycompany.usermanagement.model.UserEventSender
+import com.mycompany.usermanagement.model.*
 import com.mycompany.usermanagement.model.repository.UserRepository
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class UserService(
@@ -16,6 +14,9 @@ class UserService(
     fun create(user: User): User {
         if(userRepository.existsByEmail(user.email) || userRepository.existsByCpf(user.cpf)){
             throw UserAlreadyExistsException()
+        }
+        if(user.category == UserCategory.CUSTOMER && Objects.isNull(user.pets)){
+            throw CustomerWithNullPetException()
         }
         val savedUser = userRepository.save(user)
         eventSender.create(user)
