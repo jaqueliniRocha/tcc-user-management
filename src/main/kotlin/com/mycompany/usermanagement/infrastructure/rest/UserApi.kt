@@ -1,10 +1,10 @@
 package com.mycompany.usermanagement.infrastructure.rest
 import com.mycompany.usermanagement.application.UserService
 import com.mycompany.usermanagement.model.User
+import com.mycompany.usermanagement.model.UserCategory
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpEntity
-import org.springframework.http.ResponseEntity.created
-import org.springframework.http.ResponseEntity.noContent
+import org.springframework.http.ResponseEntity.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
 import javax.validation.Valid
@@ -46,5 +46,26 @@ class UserApi(
         log.info("updating user id $id")
         userService.update(id, user)
         return noContent().build()
+    }
+
+    @GetMapping("/employee")
+    fun findEmployee(
+    ): HttpEntity<Any?> {
+        log.info("finding employees")
+        return ok(userService.findBy(UserCategory.EMPLOYEE))
+    }
+
+    @GetMapping("/veterinary")
+    fun findVeterinary(
+    ): HttpEntity<Any?> {
+        log.info("finding veterinaries")
+        return ok(userService.findBy(UserCategory.VETERINARY))
+    }
+
+    @GetMapping("/customer")
+    fun findCustomer(
+    ): HttpEntity<Any?> {
+        log.info("finding customers")
+        return ok(userService.findBy(UserCategory.CUSTOMER))
     }
 }

@@ -43,4 +43,8 @@ class UserService(
         eventSender.delete(user.get())
     }
 
+    fun findBy(userCategory: UserCategory): Collection<User>? {
+        return userRepository.findByCategory(userCategory);
+    }
+
 }
