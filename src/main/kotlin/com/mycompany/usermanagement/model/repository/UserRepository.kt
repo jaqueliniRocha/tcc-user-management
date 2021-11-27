@@ -10,4 +10,5 @@ interface UserRepository : CrudRepository<User, Long> {
     fun existsByEmail(email: String): Boolean
     fun existsByCpf(cpf: String): Boolean
     fun findByCategory(userCategory: UserCategory): Collection<User>
+    override fun findAll(): Collection<User>
 }

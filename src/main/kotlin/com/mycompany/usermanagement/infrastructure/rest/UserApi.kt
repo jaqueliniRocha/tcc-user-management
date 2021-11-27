@@ -48,6 +48,13 @@ class UserApi(
         return noContent().build()
     }
 
+    @GetMapping
+    fun findAll(
+    ): HttpEntity<Any?> {
+        log.info("finding all users")
+        return ok(userService.findAll())
+    }
+
     @GetMapping("/employee")
     fun findEmployee(
     ): HttpEntity<Any?> {

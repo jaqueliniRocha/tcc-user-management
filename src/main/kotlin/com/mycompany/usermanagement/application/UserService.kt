@@ -47,4 +47,8 @@ class UserService(
         return userRepository.findByCategory(userCategory);
     }
 
+    fun findAll(): Collection<User>? {
+        return userRepository.findAll();
+    }
+
 }
