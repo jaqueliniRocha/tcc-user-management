@@ -29,7 +29,6 @@ class UserService(
             throw NotFoundException()
         }
         user.id = id
-        user.address.id = userFound.get().address.id
         userRepository.save(user)
         eventSender.update(user)
     }

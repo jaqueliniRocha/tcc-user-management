@@ -19,12 +19,6 @@ data class User(
     @field:NotBlank var password: String,
     @field:CPF @field:Column(unique=true) val cpf: String,
 
-    @field:NotNull
-    @field:Valid
-    @Cascade(CascadeType.ALL)
-    @OneToOne
-    val address: Address,
-
     @Enumerated(EnumType.STRING)
     @field:NotNull
     val category: UserCategory,
@@ -41,7 +35,6 @@ data class User(
 ) {
 
     override fun toString(): String {
-        return "User(id=$id, firstName='$firstName', lastName='$lastName', email='$email', cpf='$cpf', " +
-                "address=$address, category=$category)"
+        return "User(id=$id, firstName='$firstName', lastName='$lastName', email='$email', cpf='$cpf', category=$category)"
     }
 }
